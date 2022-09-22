@@ -49,10 +49,6 @@ export default function Topbar () {
                                     <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a className="dropdown-item" href="/settings">
-                                    <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
                                 <div className="dropdown-divider"></div>
                                 <a className="dropdown-item" href="/login">
                                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>

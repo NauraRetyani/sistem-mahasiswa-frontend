@@ -1,11 +1,18 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function NilaiList() {
     return <>
         <div>
             <div class="card shadow mb-4">
-                <div class="card-header py-3">
+                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 class="m-0 font-weight-bold text-primary">Nilai</h6>
+
+                    <Link to="/nilai/form">
+                        <button className="btn btn-secondary">
+                            +
+                        </button>
+                    </Link>
                 </div>
                 <div class="card-body">
                     <table class="table">

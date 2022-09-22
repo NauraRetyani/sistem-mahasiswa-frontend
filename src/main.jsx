@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App'
+import Home from './pages/Home'
 import NilaiList from './pages/Nilai/Nilailist'
 import NilaiForm from './pages/Nilai/NilaiForm'
 import UjianList from './pages/Ujian/UjianList'
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         <Route path="/register" index element={<Register />} />
 
         <Route path="/" element={<App />}>
+          <Route index element={<Home />} />
           <Route path="nilai" element={<NilaiList />} />
           <Route path="nilai/form" element={<NilaiForm />} />
           <Route path="nilai/form/:nilaiId" element={<NilaiForm />} />
