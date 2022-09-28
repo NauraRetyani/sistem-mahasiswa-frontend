@@ -39,9 +39,9 @@ export default function Topbar () {
                             <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span className="mr-2 d-none d-lg-inline text-gray-600 small">John Doe</span>
-                                    <a className="btn btn-secondary img-profile btn-circle">
-                                        <i class="fas fa-user"></i>
-                                    </a>
+                                    <div className="btn btn-secondary img-profile btn-circle">
+                                        <i className="fas fa-user"></i>
+                                    </div>
                             </a>
                             {/* <!-- Dropdown - User Information --> */}
                             <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"

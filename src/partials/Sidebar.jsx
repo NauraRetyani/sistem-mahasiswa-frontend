@@ -2,21 +2,25 @@ import { Link } from 'react-router-dom'
 
 const menuList = [
     {
+        id: 'nilai',
         title: 'Nilai',
         icon: 'fa-list',
         link: '/nilai'
     },
     {
+        id: 'ujian',
         title: 'Ujian',
         icon: 'fa-file-alt',
         link: '/ujian'
     },
     {
+        id: 'jurusan',
         title: 'Jurusan',
         icon: 'fa-school',
         link: '/jurusan'
     },
     {
+        id: 'matkul',
         title: 'Matkul',
         icon: 'fa-chalkboard',
         link: '/matkul'
@@ -35,7 +39,7 @@ export default function Sidebar () {
 
             <hr className="sidebar-divider my-0" />
             {menuList.map(menu =>
-                <li className="nav-item">
+                <li className="nav-item" key={menu.id}>
                     <Link className="nav-link" to={menu.link}>
                         <i className={"fas fa-fw " + menu.icon}></i>
                         <span>{menu.title}</span>

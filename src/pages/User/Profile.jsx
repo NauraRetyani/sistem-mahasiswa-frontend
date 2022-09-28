@@ -5,9 +5,9 @@ export default function Profile() {
     return <>
 
         <div>
-            <div class="card shadow mb-4">
+            <div className="card shadow mb-4">
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Profile</h6>
+                    <h6 className="m-0 font-weight-bold text-primary">Profile</h6>
 
                     <Link to="/settings">
                         <button className="btn btn-secondary">
@@ -15,7 +15,7 @@ export default function Profile() {
                         </button>
                     </Link>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     <tr>
                         <td>Username</td>
                         &nbsp;&nbsp;&nbsp;

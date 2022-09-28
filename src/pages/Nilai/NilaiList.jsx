@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 export default function NilaiList() {
     return <>
         <div>
-            <div class="card shadow mb-4">
+            <div className="card shadow mb-4">
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary">Nilai</h6>
+                    <h6 className="m-0 font-weight-bold text-primary">Nilai</h6>
 
                     <Link to="/nilai/form">
                         <button className="btn btn-secondary">
@@ -14,8 +14,8 @@ export default function NilaiList() {
                         </button>
                     </Link>
                 </div>
-                <div class="card-body">
-                    <table class="table">
+                <div className="card-body">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
@@ -34,12 +34,12 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
-                                        <i class="fas fa-pen"></i>
+                                    <a href="#/nilai/form" className="btn btn-info btn-circle">
+                                        <i className="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
-                                    <a href="#" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
+                                    <a href="#" className="btn btn-danger btn-circle">
+                                        <i className="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -50,12 +50,12 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
-                                        <i class="fas fa-pen"></i>
+                                    <a href="#/nilai/form" className="btn btn-info btn-circle">
+                                        <i className="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
-                                    <a href="#" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
+                                    <a href="#" className="btn btn-danger btn-circle">
+                                        <i className="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -66,12 +66,12 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
-                                        <i class="fas fa-pen"></i>
+                                    <a href="#/nilai/form" className="btn btn-info btn-circle">
+                                        <i className="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
-                                    <a href="#" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
+                                    <a href="#" className="btn btn-danger btn-circle">
+                                        <i className="fas fa-trash"></i>
                                     </a>
                                 </td>
                             </tr>
