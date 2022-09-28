@@ -34,7 +34,7 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="/nilai/form" class="btn btn-info btn-circle">
+                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
@@ -50,7 +50,7 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="/nilai/form" class="btn btn-info btn-circle">
+                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
@@ -66,7 +66,7 @@ export default function NilaiList() {
                                 <td>John Doe</td>
                                 <td>100</td>
                                 <td>
-                                    <a href="/nilai/form" class="btn btn-info btn-circle">
+                                    <a href="#/nilai/form" class="btn btn-info btn-circle">
                                         <i class="fas fa-pen"></i>
                                     </a>
                                     &nbsp;
