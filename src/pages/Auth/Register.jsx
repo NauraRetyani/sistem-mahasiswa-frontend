@@ -75,7 +75,7 @@ export default function Register() {
                                         </form>
                                         <hr />
                                         <div className="text-center">
-                                            <a className="small" href="/login">Already have an account? Login!</a>
+                                            <a className="small" href="#/login">Already have an account? Login!</a>
                                         </div>
                                     </div>
                                 </div>

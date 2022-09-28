@@ -61,7 +61,7 @@ export default function Login() {
                                         </form>
                                         <hr />
                                         <div className="text-center">
-                                            <a className="small" href="/register">Create an Account!</a>
+                                            <a className="small" href="#/register">Create an Account!</a>
                                         </div>
                                     </div>
                                 </div>
