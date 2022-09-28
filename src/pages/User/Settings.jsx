@@ -22,8 +22,8 @@ export default function Settings() {
         setFormInput(copyFormInput)
     }
 
-    async function getUsers() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/list')
+    async function getJurusan() {
+        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
         setUsers(res.data)
     }
 
@@ -45,7 +45,7 @@ export default function Settings() {
     }
 
     useEffect(() => {
-        getUsers()
+        getJurusan()
         if (isEditing) {
             getFormInput()
         }
@@ -81,13 +81,12 @@ export default function Settings() {
                         <label>Jurusan</label>
                         <select
                             className="form-control"
-                            
                             value={formInput.idJurusan}
                             onChange={evt => handleInput(evt, 'idJurusan')} >
                             <option value="" disabled></option>
                             {users.map(item =>
-                                <option value={item.id}>
-                                    {item.name}
+                                <option key={item.id} value={item.id}>
+                                    {item.namaJurusan}
                                 </option>
                             )}
                         </select>

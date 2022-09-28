@@ -55,9 +55,9 @@ export default function Login() {
                                                     value={formInput.password}
                                                     onChange={event => handleInput(event, 'password')} />
                                             </div>
-                                            <a href="/" className="btn btn-primary btn-user btn-block">
+                                            <button className="btn btn-primary btn-user btn-block">
                                                 Login
-                                            </a>
+                                            </button>
                                         </form>
                                         <hr />
                                         <div className="text-center">

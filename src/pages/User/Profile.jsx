@@ -1,7 +1,29 @@
-import React from "react";
+import axios from "axios"
+import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner"
 
 export default function Profile() {
+
+    const [data, setData] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    async function getData() {
+        try {
+            setIsLoading(true)
+            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/5')
+            setData(res.data)
+        } catch (err) {
+            alert('Terjadi kesalahan')
+        } finally {
+            setIsLoading(false)
+        }
+    }
+
+    useEffect(() => {
+        getData()
+    }, [])
+
     return <>
 
         <div>
@@ -16,26 +38,39 @@ export default function Profile() {
                     </Link>
                 </div>
                 <div className="card-body">
-                    <tr>
-                        <td>Username</td>
-                        &nbsp;&nbsp;&nbsp;
-                        <td>johndoe123</td>
-                    </tr>
-                    <tr>
-                        <td>Nama</td>
-                        &nbsp;
-                        <td>John Doe</td>
-                    </tr>
-                    <tr>
-                        <td>Jurusan</td>
-                        &nbsp;
-                        <td>Teknik Informatika</td>
-                    </tr>
-                    <tr>
-                        <td>Role</td>
-                        &nbsp;
-                        <td>Dosen</td>
-                    </tr>
+                    {isLoading
+
+                        ? <div className="d-flex justify-content-center">
+                            <Spinner />
+                        </div>
+
+                        : <div>
+                            <table>
+                                <tbody>
+                                    <tr >
+                                        <td className="font-weight-bold">Username: </td>
+                                        <td> </td>
+                                        <td>{data.username}</td>
+                                    </tr>
+                                    <tr >
+                                        <td className="font-weight-bold">Nama: </td>
+                                        <td> </td>
+                                        <td>{data.name}</td>
+                                    </tr>
+                                    <tr >
+                                        <td className="font-weight-bold">Jurusan: </td>
+                                        <td> </td>
+                                        <td>{data.namaJurusan}</td>
+                                    </tr>
+                                    <tr >
+                                        <td className="font-weight-bold">Role: </td>
+                                        <td> </td>
+                                        <td>{data.role}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    }
                 </div>
             </div>
         </div>
