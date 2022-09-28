@@ -31,6 +31,11 @@ export default function Profile() {
                         &nbsp;
                         <td>Teknik Informatika</td>
                     </tr>
+                    <tr>
+                        <td>Role</td>
+                        &nbsp;
+                        <td>Dosen</td>
+                    </tr>
                 </div>
             </div>
         </div>

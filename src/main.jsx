@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 import App from './App'
 import Home from './pages/Home'
-import NilaiList from './pages/Nilai/Nilailist'
+import NilaiList from './pages/Nilai/NilaiList'
 import NilaiForm from './pages/Nilai/NilaiForm'
 import UjianList from './pages/Ujian/UjianList'
 import UjianForm from './pages/Ujian/UjianForm'
