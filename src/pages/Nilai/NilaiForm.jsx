@@ -13,6 +13,7 @@ export default function NilaiForm() {
                     </button>
                 </Link>
             </div>
+           
             <div className="card-body">
                 <form className="w-50">
 
