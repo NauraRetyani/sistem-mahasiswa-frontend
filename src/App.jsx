@@ -1,48 +1,30 @@
 import { Outlet } from 'react-router-dom'
-
+import AuthProvider from "./contexts/AuthProvider";
+import LoginProvider from "./contexts/LoginProvider";
 import Footer from "./partials/Footer"
 import Sidebar from "./partials/Sidebar"
 import Topbar from "./partials/Topbar"
 
 function App() {
   return <>
-    <div id="wrapper">
-
-        {/* <!-- Sidebar --> */}
-        <Sidebar />
-        {/* <!-- End of Sidebar --> */}
-
-        {/* <!-- Content Wrapper --> */}
-        <div id="content-wrapper" className="d-flex flex-column">
-
-            {/* <!-- Main Content --> */}
+    <LoginProvider>
+      <AuthProvider>
+        <div id="wrapper">
+          <Sidebar />
+          <div id="content-wrapper" className="d-flex flex-column">
             <div id="content">
+              <Topbar />
+              <div className="container-fluid">
 
-                {/* <!-- Topbar --> */}
-                <Topbar />
-                {/* <!-- End of Topbar --> */}
+                <Outlet />
 
-                {/* <!-- Begin Page Content --> */}
-                <div className="container-fluid">
-
-                    {/* <!-- Page Heading --> */}
-                    <Outlet />
-
-                </div>
-                {/* <!-- /.container-fluid --> */}
-
+              </div>
             </div>
-            {/* <!-- End of Main Content --> */}
-
-            {/* <!-- Footer --> */}
             <Footer />
-            {/* <!-- End of Footer --> */}
-
+          </div>
         </div>
-        {/* <!-- End of Content Wrapper --> */}
-
-    </div>
-    {/* <!-- End of Page Wrapper --> */}
+      </AuthProvider>
+    </LoginProvider>
   </>
 }
 

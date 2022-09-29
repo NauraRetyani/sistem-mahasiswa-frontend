@@ -1,9 +1,13 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState, useContext } from "react"
 import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner"
+import { LoginContext } from "../../contexts/LoginProvider"
 
 export default function Profile() {
+    const [udahLogin, setUdahLogin] = useState('iya udah login')
+	const loginCtx = useContext(LoginContext)
+
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -25,6 +29,7 @@ export default function Profile() {
     }, [])
 
     return <>
+		<p>{loginCtx.udahLogin}</p>
 
         <div>
             <div className="card shadow mb-4">

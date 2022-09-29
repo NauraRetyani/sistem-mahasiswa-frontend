@@ -65,7 +65,7 @@ export default function Register() {
                                                     value={formInput.role}
                                                     onChange={event => handleInput(event, 'role')} >
                                                     <option value="" disabled selected hidden>Role</option>
-                                                    <option value="mhs">Mahasiswa</option>
+                                                    <option value="mahasiswa">Mahasiswa</option>
                                                     <option value="dosen">Dosen</option>
                                                 </select>
                                             </div>

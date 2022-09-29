@@ -4,7 +4,6 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function Settings() {
-
     const navigate = useNavigate()
     const params = useParams()
 
@@ -13,7 +12,8 @@ export default function Settings() {
     const [users, setUsers] = useState([])
     const [formInput, setFormInput] = useState({
         name: '',
-        idJurusan: ''
+        idJurusan: '',
+        idUser: ''
     })
 
     function handleInput(evt, propName) {
@@ -90,6 +90,17 @@ export default function Settings() {
                                 </option>
                             )}
                         </select>
+                    </div>
+
+                    <div className="form-group mb-4">
+                        <label>user id</label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            required
+                            value={formInput.idUser}
+                            onChange={evt => handleInput(evt, 'idUser')} >
+                        </input>
                     </div>
 
                     <button className="btn btn-primary">

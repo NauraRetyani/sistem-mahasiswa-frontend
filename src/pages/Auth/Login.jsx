@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../contexts/AuthProvider";
+import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Login() {
     const navigate = useNavigate()
@@ -22,7 +22,7 @@ export default function Login() {
 
         authCtx.saveUserData(res.data.data)
 
-        navigate('/')
+        navigate('/profile')
     }
 
     return <>
@@ -69,12 +69,6 @@ export default function Login() {
                                             <br></br>
                                             <a className="small" href="/">Skip</a>
                                         </div>
-
-                                        {/* <br /><hr /><br />
-                                        <p className="small">userId: {authCtx?.userData?.idUser}</p>
-                                        <p className="small">username: {authCtx?.userData?.username}</p>
-                                        <p className="small">role: {authCtx?.userData?.role}</p> */}
-
                                     </div>
                                 </div>
                             </div>
