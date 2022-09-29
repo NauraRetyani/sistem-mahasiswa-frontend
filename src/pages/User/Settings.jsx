@@ -93,7 +93,7 @@ export default function Settings() {
                     </div>
 
                     <div className="form-group mb-4">
-                        <label>user id</label>
+                        <label>user id (test)</label>
                         <input
                             type="text"
                             className="form-control"

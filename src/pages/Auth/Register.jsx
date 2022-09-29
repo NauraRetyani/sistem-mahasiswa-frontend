@@ -19,7 +19,7 @@ export default function Register() {
     async function submitData(event) {
         event.preventDefault()
         await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/register', formInput)
-        navigate('/profile')
+        navigate('/login')
     }
 
     return <>

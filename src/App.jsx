@@ -8,7 +8,7 @@ import Topbar from "./partials/Topbar"
 function App() {
   return <>
     <LoginProvider>
-      <AuthProvider>
+      {/* <AuthProvider> */}
         <div id="wrapper">
           <Sidebar />
           <div id="content-wrapper" className="d-flex flex-column">
@@ -23,7 +23,7 @@ function App() {
             <Footer />
           </div>
         </div>
-      </AuthProvider>
+      {/* </AuthProvider> */}
     </LoginProvider>
   </>
 }
