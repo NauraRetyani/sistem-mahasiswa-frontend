@@ -29,13 +29,13 @@ export default function NilaiList() {
                 <div class="card-header py-3">
                     <h6 class="m-0 font-weight-bold text-primary">Daftar Nilai</h6>
                     <Link to="/nilai/form">
-					<button className="btn btn-primary">
-						Tambah Data
-					</button>
-				</Link>
+                        <button className="btn btn-primary">
+                            Tambah Data
+                        </button>
+                    </Link>
                 </div>
                 <div class="card-body">
-                    
+
                     <table class="table">
                         <thead>
                             <tr>
@@ -48,22 +48,23 @@ export default function NilaiList() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                            <th scope="row">{index + 1}</th>
-								<td>{item.jurusan.jurusan}</td>
-								<td>{item.judul_ujian}</td>
-								<td>{item.mahasiswa.name}</td>
-								<td>{item.nilai.nilai}</td>
-                                <td>
-                                    <a href="/nilai/form" class="btn btn-info btn-circle">
-                                        <i class="fas fa-pen"></i>
-                                    </a>
-                                    &nbsp;
-                                    <a href="#" class="btn btn-danger btn-circle">
-                                        <i class="fas fa-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
+                            {data.map((item, index) =>
+                                <tr>
+                                    <th scope="row">{index + 1}</th>
+                                    <td>{item.jurusan.jurusan}</td>
+                                    <td>{item.judul_ujian}</td>
+                                    <td>{item.mahasiswa.name}</td>
+                                    <td>{item.nilai.nilai}</td>
+                                    <td>
+                                        <a href="/nilai/form" class="btn btn-info btn-circle">
+                                            <i class="fas fa-pen"></i>
+                                        </a>
+                                        &nbsp;
+                                        <a href="#" class="btn btn-danger btn-circle">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>)}
                         </tbody>
                     </table>
                 </div>

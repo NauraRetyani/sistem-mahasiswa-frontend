@@ -1,24 +1,28 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../contexts/AuthProvider";
 
 export default function Login() {
     const navigate = useNavigate()
-    const [formInput, setFormInput] = useState({
-        username: '',
-        password: ''
-    })
+    const authCtx = useContext(AuthContext)
 
-    function handleInput(event, propName) {
-        const copyFormInput = { ...formInput }
-        copyFormInput[propName] = event.target.value
-        setFormInput(copyFormInput)
-    }
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
 
-    async function submitData(event) {
-        event.preventDefault()
-        await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', formInput)
-        navigate('/profile')
+    async function handleLogin(evt) {
+        evt.preventDefault()
+
+        const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
+            username,
+            password,
+        })
+
+        console.log(res.data.data)
+
+        authCtx.saveUserData(res.data.data)
+
+        navigate('/')
     }
 
     return <>
@@ -34,7 +38,7 @@ export default function Login() {
                                         <div className="text-center">
                                             <h1 className="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                         </div>
-                                        <form className="user" onSubmit={submitData}>
+                                        <form className="user" onSubmit={handleLogin}>
                                             <div className="form-group">
                                                 <input
                                                     type="text"
@@ -42,8 +46,8 @@ export default function Login() {
                                                     id="loginInputUsername"
                                                     placeholder="Username"
                                                     required
-                                                    value={formInput.username}
-                                                    onChange={event => handleInput(event, 'username')} />
+                                                    value={username}
+                                                    onChange={evt => setUsername(evt.target.value)} />
                                             </div>
                                             <div className="form-group">
                                                 <input
@@ -52,8 +56,8 @@ export default function Login() {
                                                     id="loginInputPassword"
                                                     placeholder="Password"
                                                     required
-                                                    value={formInput.password}
-                                                    onChange={event => handleInput(event, 'password')} />
+                                                    value={password}
+                                                    onChange={evt => setPassword(evt.target.value)} />
                                             </div>
                                             <button className="btn btn-primary btn-user btn-block">
                                                 Login
@@ -62,7 +66,15 @@ export default function Login() {
                                         <hr />
                                         <div className="text-center">
                                             <a className="small" href="#/register">Create an Account!</a>
+                                            <br></br>
+                                            <a className="small" href="/">Skip</a>
                                         </div>
+
+                                        {/* <br /><hr /><br />
+                                        <p className="small">userId: {authCtx?.userData?.idUser}</p>
+                                        <p className="small">username: {authCtx?.userData?.username}</p>
+                                        <p className="small">role: {authCtx?.userData?.role}</p> */}
+
                                     </div>
                                 </div>
                             </div>

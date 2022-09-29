@@ -31,11 +31,11 @@ export default function UjianList() {
 
     return <>
         <div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Ujian</h6>
+            <div className="card shadow mb-4">
+                <div className="card-header py-3">
+                    <h6 className="m-0 font-weight-bold text-primary">Daftar Ujian</h6>
                 </div>
-                <div class="card-body">
+                <div className="card-body">
                     {isLoading
                     ?
                     <div className="d-flex justify-content-center">
@@ -52,7 +52,7 @@ export default function UjianList() {
                             </tr>
                         </thead>
                         <tbody>
-                            {examList.map((item, index) =>
+                            {dataList.map((item, index) =>
                                 <tr>
                                     <th scope="row">{index+1}</th>
                                     <td>{item.jurusanId}</td>
@@ -60,11 +60,11 @@ export default function UjianList() {
                                     <td>{item.stat_ujian}</td>
                                     <td>
                                         <button className="btn btn-info btn-circle">
-                                            <i class="fas fa-pen"></i>
+                                            <i className="fas fa-pen"></i>
                                         </button>
                                         &nbsp;
-                                        <a href="#" class="btn btn-danger btn-circle">
-                                            <i class="fas fa-trash"></i>
+                                        <a href="#" className="btn btn-danger btn-circle">
+                                            <i className="fas fa-trash"></i>
                                         </a>
                                     </td>
                                 </tr>
