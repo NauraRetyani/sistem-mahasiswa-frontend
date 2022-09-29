@@ -39,22 +39,19 @@ export default function Topbar () {
                             <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span className="mr-2 d-none d-lg-inline text-gray-600 small">John Doe</span>
-                                <img className="img-profile rounded-circle"
-                                    src="/img/undraw_profile.svg" />
+                                    <div className="btn btn-secondary img-profile btn-circle">
+                                        <i className="fas fa-user"></i>
+                                    </div>
                             </a>
                             {/* <!-- Dropdown - User Information --> */}
                             <div className="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a className="dropdown-item" href="/profile">
+                                <a className="dropdown-item" href="#/profile">
                                     <i className="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a className="dropdown-item" href="/settings">
-                                    <i className="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
-                                </a>
                                 <div className="dropdown-divider"></div>
-                                <a className="dropdown-item" href="/login">
+                                <a className="dropdown-item" href="#/login">
                                     <i className="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
