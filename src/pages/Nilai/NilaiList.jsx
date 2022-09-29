@@ -1,6 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom";
+import Spinner from "../../components/Spinner/Spinner";
 
 export default function NilaiList() {
     const [data, setData] = useState([]);
