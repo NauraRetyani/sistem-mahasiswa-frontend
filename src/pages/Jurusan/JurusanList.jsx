@@ -1,69 +1,82 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect } from "react";
+import { useState } from "react"
 import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 
 export default function JurusanList() {
-    const [data, setData] = useState([]);
+    const [dataList, setDataList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
-    async function getData() {
+    async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/1')
-            setData(res.data)
+            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
+            setDataList(res.data)
         } catch (err) {
-            alert('Terjadi kesalahan')
+            alert('Terjadi Kesalahan')
         } finally {
             setIsLoading(false)
         }
     }
 
+
+    async function deleteData(idJurusan) {
+        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + idJurusan)
+        getDataList()
+    }
+
     useEffect(() => {
-        getData()
+        getDataList()
     }, [])
 
     return <>
-        <div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Jurusan</h6>
-                    <Link to="/jurusan/form">
-                        <button className="btn btn-primary">
-                            Tambah Data
-                        </button>
-                    </Link>
-                </div>
-                <div class="card-body">
+        <div className="card shadow mb-4">
+            <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 className="m-0 font-weight-bold text-primary">LIST JURUSAN</h6>
+                <Link to="/jurusan/form">
+                    <button className="btn btn-primary">
+                        Tambah
+                    </button>
+                </Link>
 
-                    <table class="table">
+            </div>
+            <div className="card-body">
+
+                {isLoading
+                    ? <Spinner />
+                    :
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
-                                <th scope="col">Jurusan</th>
+                                <th scope="col">Nama Jurusan</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, index) =>
+                            {dataList.map((item, index) =>
                                 <tr>
-                                    <th scope="row">{index+1}</th>
-                                    <td>{item.jurusanId}</td>
+                                    <th scope="row">{index + 1}</th>
                                     <td>{item.namaJurusan}</td>
                                     <td>
-                                    <a href="/jurusan/form" class="btn btn-info btn-circle">
-                                            <i class="fas fa-pen"></i>
-                                        </a>
-                                        &nbsp;
-                                        <a href="#" class="btn btn-danger btn-circle">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+                                        <Link to={'/jurusan/form/' + item.idJurusan}>
+                                            <button className="button" class="btn btn-success">
+                                                Edit
+                                            </button>
+                                        </Link>
+                                        &nbsp; &nbsp;
+
+                                        <button className="button" class="btn btn-danger"
+                                            onClick={() => deleteData(item.idJurusan)}>
+                                            Hapus
+                                        </button>
                                     </td>
                                 </tr>
-                            )} 
+                            )}
                         </tbody>
                     </table>
-                </div>
+                }
             </div>
         </div>
     </>
