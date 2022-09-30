@@ -1,11 +1,15 @@
 import axios from "axios"
 import { useEffect, useState, useContext } from "react"
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner"
 import { LoginContext } from "../../contexts/LoginProvider"
 
 export default function Profile() {
-	const loginCtx = useContext(LoginContext)
+    let responParams = [3];
+
+    const loginCtx = useContext(LoginContext)
+    const params = useParams();
+    const isEditting = params.responParams;
 
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
@@ -13,7 +17,7 @@ export default function Profile() {
     async function getData() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/5')
+            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/' + responParams)
             setData(res.data)
         } catch (err) {
             alert('Terjadi kesalahan')
@@ -27,7 +31,7 @@ export default function Profile() {
     }, [])
 
     return <>
-		{/* <p>{loginCtx.udahLogin}</p> */}
+        {/* <p>{loginCtx.udahLogin}</p> */}
 
         <div>
             <div className="card shadow mb-4">

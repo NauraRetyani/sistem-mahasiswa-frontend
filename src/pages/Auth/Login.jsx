@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Login() {
-    const navigate = useNavigate()
+    const [userData, setUserData] = useState(getUserData)
     const authCtx = useContext(AuthContext)
+    const navigate = useNavigate()
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
@@ -18,12 +19,25 @@ export default function Login() {
             password,
         })
 
-        console.log(res.data.data)
+        const formattedResponse = JSON.stringify(res.data.data)
+        localStorage.setItem('userData', formattedResponse)
+        setUserData(res.data.data)
 
-        authCtx.saveUserData(res.data.data)
+        console.log(localStorage.userData)
 
-        navigate('/profile')
+        navigate('/')
     }
+
+    function getUserData() {
+        const savedData = localStorage.getItem('userData')
+        if (savedData) {
+            const parsedData = JSON.parse(savedData)
+            return parsedData
+        } else {
+            return {}
+        }
+    }
+
 
     return <>
         <div className="container">

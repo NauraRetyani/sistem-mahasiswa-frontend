@@ -38,7 +38,7 @@ export default function Topbar () {
                         <li className="nav-item dropdown no-arrow">
                             <a className="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span className="mr-2 d-none d-lg-inline text-gray-600 small">John Doe</span>
+                                {/* <span className="mr-2 d-none d-lg-inline text-gray-600 small">John Doe</span> */}
                                     <div className="btn btn-secondary img-profile btn-circle">
                                         <i className="fas fa-user"></i>
                                     </div>
