@@ -8,13 +8,15 @@ export default function UjianForm() {
     const navigate = useNavigate()
 	const params = useParams()
 
-	const isEditing = params.id
+	const isEditing = params.ujianId
 
-	const [jurusan, setJurusan] = useState([])
+	const [matkuls, setMatkuls] = useState([])
 	const [formInput, setFormInput] = useState({
-		judul_ujian: '',
-		stat_ujian: '',
-		jurusanId: ''
+		IdMatkul: '',
+		judulUjian: '',
+		statUjian: ''
+		
+
 	})
 
 	function handleInput (evt, propName) {
@@ -23,30 +25,38 @@ export default function UjianForm() {
 		setFormInput(copyFormInput)
 	}
 
-	async function getJurusan () {
-		const res = await axios.get('')
-		setJurusan(res.data)
+	async function getMatkuls () {
+		const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
+		setMatkuls(res.data)
 	}
 
 	async function getFormInput () {
-		const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/ujian' + params.id)
-		setFormInput(res.data)
+		const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/ujian/getujian/' + params.ujianId)
+		setFormInput({
+			...res.data, 
+			IdMatkul : res.data.idMatkul
+		})
 	}
 
 	async function submitData (evt) {
 		evt.preventDefault()
 
-		if (isEditing) {
-			await axios.put('https://sistem-mahasiswa-new.herokuapp.com/ujian' + params.id, formInput)
-		} else {
-			await axios.post('https://sistem-mahasiswa-new.herokuapp.com/ujian', formInput)
+		const payload =  {
+			...formInput, 
+			idMatkul : formInput.IdMatkul
 		}
 
-		navigate('/ujan')
+		if (isEditing) {
+			await axios.put('https://sistem-mahasiswa-new.herokuapp.com/ujian/update/' + params.ujianId,payload)
+		} else {
+			await axios.post('https://sistem-mahasiswa-new.herokuapp.com/ujian/saveujian', payload)
+		}
+
+		navigate('/ujian')
 	}
 
 	useEffect(() => {
-		getJurusan()
+		getMatkuls()
 		if (isEditing) {
 			getFormInput()
 		}
@@ -63,42 +73,35 @@ export default function UjianForm() {
                     </button>
                 </Link>
             </div>
-            <div className="card-body">
+            
+			
+			<div className="card-body">
 				<form className="w-50" onSubmit={submitData}>
+					
+				<div className="form-group mb-4">
+						<label>Mata Kuliah</label>
+						<select
+							className="form-control"
+							required
+							value={formInput.IdMatkul}
+							onChange={evt => handleInput(evt, 'IdMatkul')} >
+							<option value="" disabled></option>
+							{matkuls.map(item =>
+								<option value={item.idMatkul}>
+									{item.namaMatkul}
+								</option>
+							)}
+						</select>
+					</div>
+
 					<div className="form-group mb-4">
 						<label>Judul Ujian</label>
 						<input
 							type="text"
 							className="form-control"
 							required
-							value={formInput.title}
-							onChange={evt => handleInput(evt, 'title')} />
-					</div>
-
-                    <div className="form-group mb-4">
-						<label>Jurusan</label>
-						<select
-							className="form-control"
-							required
-							value={formInput.jurusanId}
-							onChange={evt => handleInput(evt, 'jurusanId')} >
-							<option value="" disabled></option>
-							{jurusan.map(item =>
-								<option value={item.id}>
-									{item.name}
-								</option>
-							)}
-						</select>
-					</div>
-
-                    <div className="form-group mb-4">
-						<label>Judul Ujian</label>
-						<input
-							type="text"
-							className="form-control"
-							required
-							value={formInput.title}
-							onChange={evt => handleInput(evt, 'title')} />
+							value={formInput.judulUjian}
+							onChange={evt => handleInput(evt, 'judulUjian')} />
 					</div>
 
                     <div className="form-group mb-4">
@@ -107,8 +110,8 @@ export default function UjianForm() {
 							type="text"
 							className="form-control"
 							required
-							value={formInput.title}
-							onChange={evt => handleInput(evt, 'title')} />
+							value={formInput.statUjian}
+							onChange={evt => handleInput(evt, 'statUjian')} />
 					</div>
 
                     <button className="btn btn-primary">
