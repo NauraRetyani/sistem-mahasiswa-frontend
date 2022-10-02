@@ -5,18 +5,17 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Settings() {
     const navigate = useNavigate()
-    const params = useParams()
-    const authCtx = useContext(AuthContext)
-    const isEditing = params.idMhs
 
-    const myData = localStorage.getItem('userData');
+    const savedData = localStorage.getItem('userData')
+    const parsedData = JSON.parse(savedData)
+    const idUser = parsedData.idUser
 
-    const [user, setUser] = useState([])
+    const [mhsData, setMhsData] = useState(getMhsData)
     const [jurusan, setJurusan] = useState([])
     const [formInput, setFormInput] = useState({
         name: '',
         idJurusan: '',
-        idUser: ''
+        idUser: idUser
     })
 
     function handleInput(event, propName) {
@@ -26,39 +25,42 @@ export default function Settings() {
     }
 
     async function getJurusan() {
-        const res = await axios.get(
-            'https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan'
-        );
+        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
         setJurusan(res.data)
     }
 
-    async function getFormInput() {
-        setFormInput(JSON.parse(params.idMhs));
-    }
+    // async function getFormInput() {
+    //     setFormInput(JSON.parse(params.idMhs));
+    // }
 
     async function submitData(event) {
         event.preventDefault()
+        const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/save', formInput);
 
-        if (isEditing) {
-            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/' + params.id, formInput);
-        } else {
-            const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/save', formInput);
-
-            console.log(res.data.data)
-
-            authCtx.saveUserData(res.data.data)
-        }
+        console.log(res.data.data)
+        const formattedResponse = JSON.stringify(res.data.data)
+        localStorage.setItem('profileData', formattedResponse)
+        setMhsData(res.data.data)
 
         navigate('/profile')
     }
 
+    function getMhsData() {
+        const savedData = localStorage.getItem('profileData')
+        if (savedData) {
+            const parsedData = JSON.parse(savedData)
+            return parsedData
+        } else {
+            return {}
+        }
+    }
+
     useEffect(() => {
         getJurusan()
-        if (isEditing) {
-            getFormInput()
-        }
+        // if (isEditing) {
+        //     getFormInput()
+        // }
     }, [])
-
 
     return <>
 
@@ -89,36 +91,19 @@ export default function Settings() {
                         <label>Jurusan</label>
                         <select
                             className="form-control"
+                            required
                             value={formInput.idJurusan}
                             onChange={(event) => handleInput(event, 'idJurusan')} >
                             <option value="" disabled></option>
                             {jurusan.map(item =>
                                 <option
-                                    key={item.id}
-                                    value={item.id}>
+                                    key={item.idJurusan}
+                                    value={item.idJurusan}>
                                     {item.namaJurusan}
                                 </option>
                             )}
                         </select>
                     </div>
-
-                    {/* <div className="form-group mb-4">
-                        <label>jurusan (test)</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            required
-                            value={formInput.idJurusan}
-                            onChange={event => handleInput(event, 'idJurusan')} >
-                        </input>
-                    </div> */}
-
-                    {/* <div className="form-group mb-4">
-                        <label
-                            value={myData[10]}
-                            onChange={event => handleInput(event, 'idUser')} ></label>
-                        <p>userId: {user.idUser}</p>
-                    </div> */}
 
                     <button className="btn btn-primary">
                         Submit

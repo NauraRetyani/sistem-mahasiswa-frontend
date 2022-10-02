@@ -1,29 +1,53 @@
 import axios from "axios"
 import { useEffect, useState, useContext } from "react"
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner"
 import { LoginContext } from "../../contexts/LoginProvider"
 
 export default function Profile() {
-    let responParams = [3];
-
-    const loginCtx = useContext(LoginContext)
-    const params = useParams();
-    const isEditting = params.responParams;
-
+    const navigate = useNavigate()
+    const [userData, setUserData] = useState(getUserData)
+    const isLogin = Object.values(userData).length > 0
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+    // const loginCtx = useContext(LoginContext)
+    // const params = useParams();
+    // const isEditting = params.responParams;
+
     async function getData() {
         try {
+            const savedData = localStorage.getItem('profileData')
+            const parsedData = JSON.parse(savedData)
+            const idMhs = parsedData.idMhs
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/' + responParams)
+            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/' + idMhs)
             setData(res.data)
         } catch (err) {
-            alert('Terjadi kesalahan')
+            alert('Terjadi Kesalahan')
         } finally {
             setIsLoading(false)
         }
+    }
+
+    function getUserData() {
+        const savedData = localStorage.getItem('userData')
+        if (savedData) {
+            const parsedData = JSON.parse(savedData)
+            return parsedData
+        } else {
+            return {}
+        }
+    }
+
+    function toSettings() {
+        if (isLogin) {
+            navigate('/settings')
+        } else {
+            alert('Anda Belum Login')
+            navigate('/login')
+        }
+
     }
 
     useEffect(() => {
@@ -31,18 +55,16 @@ export default function Profile() {
     }, [])
 
     return <>
-        {/* <p>{loginCtx.udahLogin}</p> */}
 
         <div>
             <div className="card shadow mb-4">
                 <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 className="m-0 font-weight-bold text-primary">Profile</h6>
 
-                    <Link to="/settings">
-                        <button className="btn btn-secondary">
-                            Settings
-                        </button>
-                    </Link>
+                    <button className="btn btn-secondary" onClick={toSettings}>
+                        Settings
+                    </button>
+
                 </div>
                 <div className="card-body">
                     {isLoading

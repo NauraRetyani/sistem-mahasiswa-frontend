@@ -3,29 +3,42 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
+export let responses = [];
+
 export default function Login() {
     const [userData, setUserData] = useState(getUserData)
-    const authCtx = useContext(AuthContext)
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true);
+    // const authCtx = useContext(AuthContext)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     async function handleLogin(evt) {
-        evt.preventDefault()
+        try {
+            evt.preventDefault()
+            setIsLoading(true)
+            const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
+                username,
+                password,
+            })
 
-        const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
-            username,
-            password,
-        })
+            const formattedResponse = JSON.stringify(res.data.data)
+            localStorage.setItem('userData', formattedResponse)
+            setUserData(res.data.data)
 
-        const formattedResponse = JSON.stringify(res.data.data)
-        localStorage.setItem('userData', formattedResponse)
-        setUserData(res.data.data)
+            console.log(localStorage.userData)
 
-        console.log(localStorage.userData)
-
-        navigate('/')
+            if (res.data.data == null) {
+                alert('Username atau Password Salah')
+            } else {
+                navigate('/')
+            }
+        } catch (err) {
+            alert('Terjadi Kesalahan')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     function getUserData() {
@@ -37,7 +50,6 @@ export default function Login() {
             return {}
         }
     }
-
 
     return <>
         <div className="container">
@@ -81,7 +93,7 @@ export default function Login() {
                                         <div className="text-center">
                                             <a className="small" href="#/register">Create an Account!</a>
                                             <br></br>
-                                            <a className="small" href="/">Skip</a>
+                                            {/* <a className="small" href="/">Skip</a> */}
                                         </div>
                                     </div>
                                 </div>
