@@ -25,9 +25,7 @@ export default function Settings() {
     }
 
     async function getJurusan() {
-        const res = await axios.get(
-            'https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan'
-        );
+        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
         setJurusan(res.data)
     }
 
@@ -89,32 +87,22 @@ export default function Settings() {
                         </input>
                     </div>
 
-                    {/* <div className="form-group mb-4">
+                    <div className="form-group mb-4">
                         <label>Jurusan</label>
                         <select
                             className="form-control"
+                            required
                             value={formInput.idJurusan}
                             onChange={(event) => handleInput(event, 'idJurusan')} >
                             <option value="" disabled></option>
                             {jurusan.map(item =>
                                 <option
-                                    key={item.id}
-                                    value={item.id}>
+                                    key={item.idJurusan}
+                                    value={item.idJurusan}>
                                     {item.namaJurusan}
                                 </option>
                             )}
                         </select>
-                    </div> */}
-
-                    <div className="form-group mb-4">
-                        <label>jurusan (test)</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            required
-                            value={formInput.idJurusan}
-                            onChange={event => handleInput(event, 'idJurusan')} >
-                        </input>
                     </div>
 
                     <button className="btn btn-primary">

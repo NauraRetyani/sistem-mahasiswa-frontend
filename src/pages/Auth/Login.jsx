@@ -3,6 +3,8 @@ import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthProvider";
 
+export let responses = [];
+
 export default function Login() {
     const [userData, setUserData] = useState(getUserData)
     const navigate = useNavigate()
@@ -27,9 +29,13 @@ export default function Login() {
 
             console.log(localStorage.userData)
 
-            navigate('/')
+            if (res.data.data == null) {
+                alert('Username atau Password Salah')
+            } else {
+                navigate('/')
+            }
         } catch (err) {
-            alert('Username atau Password Salah')
+            alert('Terjadi Kesalahan')
         } finally {
             setIsLoading(false)
         }
@@ -87,7 +93,7 @@ export default function Login() {
                                         <div className="text-center">
                                             <a className="small" href="#/register">Create an Account!</a>
                                             <br></br>
-                                            <a className="small" href="/">Skip</a>
+                                            {/* <a className="small" href="/">Skip</a> */}
                                         </div>
                                     </div>
                                 </div>
