@@ -5,27 +5,34 @@ import { AuthContext } from "../../contexts/AuthProvider";
 
 export default function Login() {
     const [userData, setUserData] = useState(getUserData)
-    const authCtx = useContext(AuthContext)
     const navigate = useNavigate()
+    const [isLoading, setIsLoading] = useState(true);
+    // const authCtx = useContext(AuthContext)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
 
     async function handleLogin(evt) {
-        evt.preventDefault()
+        try {
+            evt.preventDefault()
+            setIsLoading(true)
+            const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
+                username,
+                password,
+            })
 
-        const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
-            username,
-            password,
-        })
+            const formattedResponse = JSON.stringify(res.data.data)
+            localStorage.setItem('userData', formattedResponse)
+            setUserData(res.data.data)
 
-        const formattedResponse = JSON.stringify(res.data.data)
-        localStorage.setItem('userData', formattedResponse)
-        setUserData(res.data.data)
+            console.log(localStorage.userData)
 
-        console.log(localStorage.userData)
-
-        navigate('/')
+            navigate('/')
+        } catch (err) {
+            alert('Username atau Password Salah')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     function getUserData() {
@@ -37,7 +44,6 @@ export default function Login() {
             return {}
         }
     }
-
 
     return <>
         <div className="container">
