@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios"
 import { useEffect } from "react";
 import { useState } from "react"
@@ -13,6 +14,7 @@ export default function MatkulList() {
             setIsLoading(true)
             const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
             setDataList(res.data)
+            console.log(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')
         } finally {
