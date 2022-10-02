@@ -4,15 +4,13 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function MatkulForm() {
-    
+
     const navigate = useNavigate()
     const params = useParams()
 
-    const isEditing = params.idMatkul
-
-    const [matkuls, setMatkuls] = useState([])
+    const isEditing = params.matkulId
+    
     const [formInput, setFormInput] = useState({
-        idMatkul: '',
         namaMatkul: ''
     })
 
@@ -22,29 +20,24 @@ export default function MatkulForm() {
         setFormInput(copyFormInput)
     }
 
-    async function getMatkuls() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
-        setMatkuls(res.data)
-    }
-
-    async function getFormInput () {
+    async function getFormInput() {
         axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/' + params.idMatkul)
         setFormInput({
-			...res.data, 
-			IdMatkul : res.data.idMatkul
-		})
+            ...res.data,
+            matkulId: res.data.matkulId
+        })
     }
 
     async function submitData(evt) {
         evt.preventDefault()
 
-        const payload =  {
-			...formInput, 
-			idMatkul : formInput.IdMatkul
-		}
+        const payload = {
+            ...formInput,
+            matkulId: formInput.matkulId
+        }
 
         if (isEditing) {
-            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/matkul/up/' + params.idMatkul, payload)
+            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/matkul/up/' + params.matkulId, payload)
         } else {
             await axios.post('https://sistem-mahasiswa-new.herokuapp.com/matkul/savematkul', payload)
         }
@@ -52,7 +45,6 @@ export default function MatkulForm() {
     }
 
     useEffect(() => {
-        getMatkuls()
         if (isEditing) {
             getFormInput()
         }
@@ -73,20 +65,14 @@ export default function MatkulForm() {
                 <form className="w-25" onSubmit={submitData}>
 
                 <div className="form-group mb-4">
-						<label>Mata Kuliah</label>
-						<select
-							className="form-control"
-							required
-							value={formInput.idMatkul}
-							onChange={evt => handleInput(evt, 'idMatkul')} >
-							<option value="" disabled></option>
-							{matkuls.map(item =>
-								<option value={item.idMatkul}>
-									{item.namaMatkul}
-								</option>
-							)}
-						</select>
-					</div>
+                        <label>Mata Kuliah</label>
+                        <input
+                        type="text" 
+                        className="form-control" 
+                        required
+                        value={formInput.namaMatkul}
+                        onChange={evt => handleInput(evt, 'namaMatkul')} />
+                    </div>
 
                     <button className="btn btn-primary">
                         Submit

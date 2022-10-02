@@ -4,15 +4,13 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function JurusanForm() {
-    
+
     const navigate = useNavigate()
     const params = useParams()
 
-    const isEditing = params.idJurusan
+    const isEditing = params.jurusanId
 
-    const [option, setOption] = useState([])
     const [formInput, setFormInput] = useState({
-        idJurusan: '',
         namaJurusan: ''
     })
 
@@ -22,37 +20,33 @@ export default function JurusanForm() {
         setFormInput(copyFormInput)
     }
 
-    async function getOption() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
-        setOption(res.data)
-    }
 
-    async function getFormInput () {
-        axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + params.idJurusan)
+    async function getFormInput() {
+        axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + params.jurusanId)
         setFormInput({
-			...res.data, 
-			idJurusan : res.data.idJurusan
-		})
+            ...res.data,
+            idJurusan: res.data.jurusanId
+        })
     }
 
     async function submitData(evt) {
         evt.preventDefault()
-        
-        const payload =  {
-			...formInput, 
-			idJurusan : formInput.idJurusan
-		}
 
+        const payload = {
+            ...formInput,
+            jurusanId: formInput.jurusanId
+        }
+        
         if (isEditing) {
-            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/jurusan/up/' + params.idJurusan, payload)
+            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/jurusan/up/' + params.jurusanId, payload)
         } else {
             await axios.post('https://sistem-mahasiswa-new.herokuapp.com/jurusan/savejurusan', payload)
         }
         navigate('/jurusan')
     }
+    
 
     useEffect(() => {
-        getOption()
         if (isEditing) {
             getFormInput()
         }
@@ -71,23 +65,17 @@ export default function JurusanForm() {
             </div>
             <div className="card-body">
                 <form className="w-25" onSubmit={submitData}>
-                   
+
                 <div className="form-group mb-4">
-						<label>Jurusan</label>
-						<select
-							className="form-control"
-							required
-							value={formInput.idJurusan}
-							onChange={evt => handleInput(evt, 'idJurusan')} >
-							<option value="" disabled></option>
-							{option.map(item =>
-								<option value={item.idJurusan}>
-									{item.namaJurusan}
-								</option>
-							)}
-						</select>
-					</div>
-                    
+                        <label>Jurusan</label>
+                        <input
+                        type="text" 
+                        className="form-control" 
+                        required
+                        value={formInput.namaJurusan}
+                        onChange={evt => handleInput(evt, 'namaJurusan')} />
+                    </div>
+
                     <button className="btn btn-primary">
                         Submit
                     </button>
