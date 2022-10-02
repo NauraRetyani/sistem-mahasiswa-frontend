@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 export default function JurusanForm() {
+    
     const navigate = useNavigate()
     const params = useParams()
 
@@ -11,6 +12,7 @@ export default function JurusanForm() {
 
     const [option, setOption] = useState([])
     const [formInput, setFormInput] = useState({
+        idJurusan: '',
         namaJurusan: ''
     })
 
@@ -27,16 +29,24 @@ export default function JurusanForm() {
 
     async function getFormInput () {
         axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + params.idJurusan)
-        setFormInput(res.data)
+        setFormInput({
+			...res.data, 
+			idJurusan : res.data.idJurusan
+		})
     }
 
     async function submitData(evt) {
         evt.preventDefault()
+        
+        const payload =  {
+			...formInput, 
+			idJurusan : formInput.idJurusan
+		}
 
         if (isEditing) {
-            await axios.post('https://sistem-mahasiswa-new.herokuapp.com/jurusan/savejurusan' + params.idJurusan, formInput)
+            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/jurusan/up/' + params.idJurusan, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-new.herokuapp.com/jurusan/savejurusan', formInput)
+            await axios.post('https://sistem-mahasiswa-new.herokuapp.com/jurusan/savejurusan', payload)
         }
         navigate('/jurusan')
     }
@@ -61,22 +71,23 @@ export default function JurusanForm() {
             </div>
             <div className="card-body">
                 <form className="w-25" onSubmit={submitData}>
-                    <div className="form-group">
-                        <label>Nama Jurusan</label>
-                        <select
-                            className="form-control"
-                            required
-                            value={formInput.namaJurusan}
-                            onChange={evt => handleInput(evt, 'namaJurusan')} >
-
-                            <option value="" disabled ></option>
-                            {option.map(item =>
-                                <option value={item.idJurusan}>
-                                    item.namaJurusan
-                                </option>
-                            )}
-                        </select>
-                    </div>
+                   
+                <div className="form-group mb-4">
+						<label>Jurusan</label>
+						<select
+							className="form-control"
+							required
+							value={formInput.idJurusan}
+							onChange={evt => handleInput(evt, 'idJurusan')} >
+							<option value="" disabled></option>
+							{option.map(item =>
+								<option value={item.idJurusan}>
+									{item.namaJurusan}
+								</option>
+							)}
+						</select>
+					</div>
+                    
                     <button className="btn btn-primary">
                         Submit
                     </button>
