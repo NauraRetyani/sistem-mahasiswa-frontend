@@ -14,7 +14,6 @@ export default function MatkulList() {
             setIsLoading(true)
             const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
             setDataList(res.data)
-            console.log(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')
         } finally {
@@ -24,8 +23,15 @@ export default function MatkulList() {
 
 
     async function deleteData(idMatkul) {
-        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/matkul/' + idMatkul)
-        getDataList()
+        try {
+            setIsLoading(true)
+            const res = await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/matkul/' + idMatkul)
+            getDataList(res.data)
+        } catch (err) {
+            alert('Terjadi Kesalahan')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {

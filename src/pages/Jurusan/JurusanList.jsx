@@ -21,8 +21,15 @@ export default function JurusanList() {
     }
 
     async function deleteData(idJurusan) {
-        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + idJurusan)
-        getDataList()
+        try {
+            setIsLoading(true)
+            const res = await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + idJurusan)
+            getDataList(res.data)
+        } catch (err) {
+            alert('Terjadi Kesalahan')
+        } finally {
+            setIsLoading(false)
+        }
     }
 
     useEffect(() => {
