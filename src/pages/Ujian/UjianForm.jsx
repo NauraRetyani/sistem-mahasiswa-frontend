@@ -12,6 +12,7 @@ export default function UjianForm() {
 
 	const [matkuls, setMatkuls] = useState([])
 	const [formInput, setFormInput] = useState({
+		
 		IdMatkul: '',
 		judulUjian: '',
 		statUjian: ''

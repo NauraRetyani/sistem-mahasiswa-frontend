@@ -1,17 +1,21 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
+import React from "react";
+import axios from "axios";
+import { useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner";
 
 export default function NilaiList() {
-    const [data, setData] = useState([]);
+    const [dataList, setData] = useState([]);
+
     const [isLoading, setIsLoading] = useState(true);
 
-    async function getData() {
+    async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/nilai/1')
+            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/nilai/listnilai')
             setData(res.data)
+            console.log(res.data)
         } catch (err) {
             alert('Terjadi kesalahan')
         } finally {
@@ -19,54 +23,72 @@ export default function NilaiList() {
         }
     }
 
+    async function deleteData(id) {
+        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/nilai/delete/' + id)
+        getDataList()
+    }
+
     useEffect(() => {
-        getData()
+        getDataList()
     }, [])
 
     return <>
         <div>
-            <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">Daftar Nilai</h6>
+            <div className="card shadow mb-4">
+                <div className="card-header py-3">
+                    <h6 className="m-0 font-weight-bold text-primary">Daftar Nilai</h6>
                     <Link to="/nilai/form">
                         <button className="btn btn-primary">
                             Tambah Data
                         </button>
                     </Link>
                 </div>
-                <div class="card-body">
-
-                    <table class="table">
+                <div className="card-body">
+                {isLoading
+                        ?
+                        <div className="d-flex justify-content-center">
+                            <Spinner />
+                        </div> :
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">NO</th>
+                                <th scope="col">Nama</th>
                                 <th scope="col">Jurusan</th>
                                 <th scope="col">Ujian</th>
-                                <th scope="col">Nama</th>
+                                <th scope="col">Mata Kuliah</th>
                                 <th scope="col">Nilai</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {data.map((item, index) =>
+                            {dataList.map((item, index) =>
                                 <tr>
                                     <th scope="row">{index + 1}</th>
-                                    <td>{item.jurusan.jurusan}</td>
-                                    <td>{item.judul_ujian}</td>
-                                    <td>{item.mahasiswa.name}</td>
-                                    <td>{item.nilai.nilai}</td>
+                                    <td>{item.name}</td>
+                                    <td>{item.jurusan?.namaJurusan}</td>
+                                    <td>{item.judulUjian}</td>
+                                    <td>{item.matkul?.namaMatkul}</td>
+                                    <td>{item.nilai}</td>
                                     <td>
-                                        <a href="/nilai/form" class="btn btn-info btn-circle">
-                                            <i class="fas fa-pen"></i>
-                                        </a>
+                                        <Link to={'/nilai/form/' + item.idNilai}>
+                                            <button className="btn btn-info btn-circle">
+                                                <i className="fas fa-pen"></i>
+                                            </button>
+                                        </Link>
+
                                         &nbsp;
-                                        <a href="#" class="btn btn-danger btn-circle">
-                                            <i class="fas fa-trash"></i>
-                                        </a>
+
+                                        <button
+                                            className="btn btn-danger btn-circle"
+                                            onClick={() => deleteData(item.idNilai)}>
+                                            <i className="fas fa-trash"></i>
+                                        </button>
+
                                     </td>
                                 </tr>)}
                         </tbody>
-                    </table>
+                    </table>}
                 </div>
             </div>
         </div>

@@ -35,7 +35,7 @@ export default function UjianList() {
     return <>
         <div>
             <div className="card shadow mb-4">
-                <div className="card-header py-3">
+                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 className="m-0 font-weight-bold text-primary">Daftar Ujian</h6>
                     <Link to="/ujian/form">
                         <button className="btn btn-primary">
