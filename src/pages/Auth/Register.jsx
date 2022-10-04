@@ -18,7 +18,7 @@ export default function Register() {
 
     async function submitData(event) {
         event.preventDefault()
-        await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/register', formInput)
+        await axios.post('https://sistem-mahasiswa-be.herokuapp.com/auth/register', formInput)
         navigate('/login')
     }
 

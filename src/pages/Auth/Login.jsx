@@ -14,7 +14,7 @@ export default function Login() {
         try {
             evt.preventDefault()
             setIsLoading(true)
-            const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/auth/login', {
+            const res = await axios.post('https://sistem-mahasiswa-be.herokuapp.com/auth/login', {
                 username,
                 password,
             })

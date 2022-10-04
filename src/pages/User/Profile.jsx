@@ -16,7 +16,7 @@ export default function Profile() {
             const parsedData = JSON.parse(savedData)
             const idMhs = parsedData.idMhs
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/' + idMhs)
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/mahasiswa/' + idMhs)
             setData(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')

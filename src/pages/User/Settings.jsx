@@ -24,13 +24,13 @@ export default function Settings() {
     }
 
     async function getJurusan() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/listjurusan')
         setJurusan(res.data)
     }
 
     async function submitData(event) {
         event.preventDefault()
-        const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/save', formInput);
+        const res = await axios.post('https://sistem-mahasiswa-be.herokuapp.com/mahasiswa/save', formInput);
 
         console.log(res.data.data)
         const formattedResponse = JSON.stringify(res.data.data)
