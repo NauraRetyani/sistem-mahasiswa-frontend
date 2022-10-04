@@ -13,7 +13,7 @@ export default function UjianList() {
     async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/ujian/listujian')
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/listujian')
             setDataList(res.data)
             console.log(res.data)
         } catch (err) {
@@ -24,7 +24,7 @@ export default function UjianList() {
     }
 
     async function deleteData(id) {
-        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/ujian/delete/' + id)
+        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/ujian/delete' + id)
         getDataList()
     }
     useEffect(() => {

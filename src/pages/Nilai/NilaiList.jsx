@@ -13,7 +13,7 @@ export default function NilaiList() {
     async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/nilai/listnilai')
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/listnilai')
             setData(res.data)
             console.log(res.data)
         } catch (err) {
@@ -24,7 +24,7 @@ export default function NilaiList() {
     }
 
     async function deleteData(id) {
-        await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/nilai/delete/' + id)
+        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/nilai/delete/' + id)
         getDataList()
     }
 
@@ -66,9 +66,9 @@ export default function NilaiList() {
                                 <tr>
                                     <th scope="row">{index + 1}</th>
                                     <td>{item.name}</td>
-                                    <td>{item.jurusan?.namaJurusan}</td>
+                                    <td>{item.namaJurusan}</td>
                                     <td>{item.judulUjian}</td>
-                                    <td>{item.matkul?.namaMatkul}</td>
+                                    <td>{item.namaMatkul}</td>
                                     <td>{item.nilai}</td>
                                     <td>
                                         <Link to={'/nilai/form/' + item.idNilai}>

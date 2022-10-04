@@ -27,12 +27,12 @@ export default function UjianForm() {
 	}
 
 	async function getMatkuls () {
-		const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
+		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/listmatkul')
 		setMatkuls(res.data)
 	}
 
 	async function getFormInput () {
-		const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/ujian/getujian/' + params.ujianId)
+		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/getujian/' + params.ujianId)
 		setFormInput({
 			...res.data, 
 			IdMatkul : res.data.idMatkul
@@ -48,9 +48,9 @@ export default function UjianForm() {
 		}
 
 		if (isEditing) {
-			await axios.put('https://sistem-mahasiswa-new.herokuapp.com/ujian/update/' + params.ujianId,payload)
+			await axios.put('https://sistem-mahasiswa-be.herokuapp.com/ujian/update/' + params.ujianId,payload)
 		} else {
-			await axios.post('https://sistem-mahasiswa-new.herokuapp.com/ujian/saveujian', payload)
+			await axios.post('https://sistem-mahasiswa-be.herokuapp.com/ujian/saveujian', payload)
 		}
 
 		navigate('/ujian')

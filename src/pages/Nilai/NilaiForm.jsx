@@ -10,15 +10,16 @@ export default function NilaiForm() {
 
     const isEditing = params.nilaiId
 
-    const [departments, setDepartments] = useState([])
+    const [students, setStudents] = useState([])
+    const [majors, setMajors] = useState([])
     const [exams, setExams] = useState([])
-    const [matkuls, setMatkuls] = useState([])
+    const [lessons, setLessons] = useState([])
 
     const [formInput, setFormInput] = useState({
 
-        name: '',
-        idJurusan: '',
-        judulUjian: '',
+        IdMhs: '',
+        IdJurusan: '',
+        IdUjian: '',
         IdMatkul: '',
         nilai: ''
 
@@ -30,25 +31,66 @@ export default function NilaiForm() {
         setFormInput(copyFormInput)
     }
 
-    async function getDepartments() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
-        setDepartments(res.data)
+    async function getStudents() {
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/mahasiswa/list')
+        setStudents(res.data)
+    }
+    async function getMajors() {
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/listjurusan')
+        setMajors(res.data)
+    }
+    async function getExams() {
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/listujian')
+        setExams(res.data)
+    }
+
+    async function getLessons() {
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/listmatkul')
+        setLessons(res.data)
     }
 
     async function getFormInput() {
-        const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/nilai/getnilai/' + params.ujianId)
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/getnilai/' + params.nilaiId)
         setFormInput({
             ...res.data,
-            IdMhs: res.data.idMhs
-        })
-        setFormInput({
+            IdMhs: res.data.idMhs,
+
             ...res.data,
-            IdMhs: res.data.idMhs
+            IdMatkul: res.data.idMatkul
+
         })
+    }
+    async function submitData(evt) {
+        evt.preventDefault()
+
+        const payload = {
+            ...formInput,
+            idMhs: formInput.IdMhs
+        }
+
+        if (isEditing) {
+            await axios.put('https://sistem-mahasiswa-be.herokuapp.com/nilai/update/' + params.nilaiId, payload)
+        } else {
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/nilai/savenilai', payload)
+        }
+
+        navigate('/nilai')
     }
 
     useEffect(() => {
-        getNames()
+        getStudents()
+        if (isEditing) {
+            getFormInput()
+        }
+        getMajors()
+        if (isEditing) {
+            getFormInput()
+        }
+        getExams()
+        if (isEditing){
+            getFormInput()
+        }
+        getLessons()
         if (isEditing) {
             getFormInput()
         }
@@ -71,58 +113,66 @@ export default function NilaiForm() {
 
                     <div className="form-group mb-4">
                         <label>Nama</label>
-                        <input
-                            type="text"
+                        <select
                             className="form-control"
                             required
-                            value={formInput.name}
-                            onChange={evt => handleInput(evt, 'name')} />
+                            value={formInput.IdMhs}
+                            onChange={evt => handleInput(evt, 'IdMhs')} >
+                            <option value="" disabled></option>
+                            {students.map(item =>
+                                <option value={item.idMhs}>
+                                    {item.name}
+                                </option>
+                            )}
+                        </select>
                     </div>
 
                     <div className="form-group mb-4">
                         <label>Jurusan</label>
-                        <input
-                            type="text"
+                        <select
                             className="form-control"
                             required
-                            value={formInput.idJurusan}
-                            onChange={evt => handleInput(evt, 'idJurusan')} />
-                    </div>
-
-                    <div className="form-group mb-4">
-                        <label>Jurusan</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            required
-                            value={formInput.idJurusan}
-                            onChange={evt => handleInput(evt, 'idJurusan')} />
+                            value={formInput.IdJurusan}
+                            onChange={evt => handleInput(evt, 'IdJurusan')} >
+                            <option value="" disabled></option>
+                            {majors.map(item =>
+                                <option value={item.IdJurusan}>
+                                    {item.namaJurusan}
+                                </option>
+                            )}
+                        </select>
                     </div>
 
                     <div className="form-group mb-4">
                         <label>Ujian</label>
-                        <input
-                            type="text"
+                        <select
                             className="form-control"
                             required
-                            value={formInput.judulUjian}
-                            onChange={evt => handleInput(evt, 'judulUjian')} />
+                            value={formInput.IdUjian}
+                            onChange={evt => handleInput(evt, 'IdUjian')} >
+                            <option value="" disabled></option>
+                            {exams.map(item =>
+                                <option value={item.IdUjian}>
+                                    {item.judulUjian}
+                                </option>
+                            )}
+                        </select>
                     </div>
 
                     <div className="form-group mb-4">
                         <label>Mata Kuliah</label>
-                        <input
-                            type="text"
+                        <select
                             className="form-control"
                             required
                             value={formInput.IdMatkul}
-                            onChange={evt => handleInput(evt, 'idMatkul')} />
+                            onChange={evt => handleInput(evt, 'IdMatkul')} >
                             <option value="" disabled></option>
-							{matkuls.map(item =>
-								<option value={item.idMatkul}>
-									{item.namaMatkul}
-								</option>
-							)}
+                            {lessons.map(item =>
+                                <option value={item.idMatkul}>
+                                    {item.namaMatkul}
+                                </option>
+                            )}
+                        </select>
                     </div>
 
                     <div className="form-group mb-4">
@@ -135,13 +185,13 @@ export default function NilaiForm() {
                             onChange={evt => handleInput(evt, 'nilai')} />
                     </div>
 
-                    
+
                     <button className="btn btn-primary">
                         Submit
                     </button>
                 </form>
             </div>
 
-        </div>
+        </div >
     </>
 }
