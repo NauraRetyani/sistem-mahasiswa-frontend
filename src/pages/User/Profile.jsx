@@ -1,8 +1,7 @@
 import axios from "axios"
-import { useEffect, useState, useContext } from "react"
-import { Link, useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner/Spinner"
-import { LoginContext } from "../../contexts/LoginProvider"
 
 export default function Profile() {
     const navigate = useNavigate()
@@ -10,10 +9,6 @@ export default function Profile() {
     const isLogin = Object.values(userData).length > 0
     const [data, setData] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-
-    // const loginCtx = useContext(LoginContext)
-    // const params = useParams();
-    // const isEditting = params.responParams;
 
     async function getData() {
         try {

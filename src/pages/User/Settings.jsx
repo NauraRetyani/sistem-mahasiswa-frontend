@@ -1,7 +1,6 @@
 import axios from "axios";
-import { useEffect, useContext, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Settings() {
     const navigate = useNavigate()
@@ -29,10 +28,6 @@ export default function Settings() {
         setJurusan(res.data)
     }
 
-    // async function getFormInput() {
-    //     setFormInput(JSON.parse(params.idMhs));
-    // }
-
     async function submitData(event) {
         event.preventDefault()
         const res = await axios.post('https://sistem-mahasiswa-new.herokuapp.com/mahasiswa/save', formInput);
@@ -57,9 +52,6 @@ export default function Settings() {
 
     useEffect(() => {
         getJurusan()
-        // if (isEditing) {
-        //     getFormInput()
-        // }
     }, [])
 
     return <>

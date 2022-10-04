@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { BrowserRouter, Routes, Route, HashRouter } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, HashRouter, Navigate } from 'react-router-dom'
 
 import App from './App'
 import Home from './pages/Home'
@@ -23,7 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <Routes>
         <Route path="/">
           <Route path="login" index element={<Login />} />
-          <Route path="register" index element={<Register />} />
+          <Route path="register" element={<Register />} />
           <Route element={<App />}>
             <Route index element={<Home />} />
             <Route path="nilai" element={<NilaiList />} />

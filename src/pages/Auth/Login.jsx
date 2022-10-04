@@ -1,15 +1,11 @@
 import axios from "axios";
-import { useState, useContext } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { AuthContext } from "../../contexts/AuthProvider";
-
-export let responses = [];
 
 export default function Login() {
     const [userData, setUserData] = useState(getUserData)
     const navigate = useNavigate()
     const [isLoading, setIsLoading] = useState(true);
-    // const authCtx = useContext(AuthContext)
 
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
