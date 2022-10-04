@@ -11,7 +11,7 @@ export default function JurusanList() {
     async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/listjurusan')
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/listjurusan')
             setDataList(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')
@@ -23,7 +23,7 @@ export default function JurusanList() {
     async function deleteData(idJurusan) {
         try {
             setIsLoading(true)
-            const res = await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + idJurusan)
+            const res = await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/jurusan/' + idJurusan)
             getDataList(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')

@@ -12,7 +12,7 @@ export default function MatkulList() {
     async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/listmatkul')
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/listmatkul')
             setDataList(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')
@@ -25,7 +25,7 @@ export default function MatkulList() {
     async function deleteData(idMatkul) {
         try {
             setIsLoading(true)
-            const res = await axios.delete('https://sistem-mahasiswa-new.herokuapp.com/matkul/' + idMatkul)
+            const res = await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/matkul/' + idMatkul)
             getDataList(res.data)
         } catch (err) {
             alert('Terjadi Kesalahan')

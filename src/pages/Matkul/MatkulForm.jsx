@@ -21,7 +21,7 @@ export default function MatkulForm() {
     }
 
     async function getFormInput() {
-        axios.get('https://sistem-mahasiswa-new.herokuapp.com/matkul/' + params.idMatkul)
+        axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/' + params.idMatkul)
         setFormInput({
             ...res.data,
             matkulId: res.data.matkulId
@@ -37,9 +37,9 @@ export default function MatkulForm() {
         }
 
         if (isEditing) {
-            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/matkul/up/' + params.matkulId, payload)
+            await axios.put('https://sistem-mahasiswa-be.herokuapp.com/matkul/up/' + params.matkulId, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-new.herokuapp.com/matkul/savematkul', payload)
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/matkul/savematkul', payload)
         }
         navigate('/matkul')
     }

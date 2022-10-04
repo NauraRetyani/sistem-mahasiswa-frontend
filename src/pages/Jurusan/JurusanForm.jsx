@@ -22,7 +22,7 @@ export default function JurusanForm() {
 
 
     async function getFormInput() {
-        axios.get('https://sistem-mahasiswa-new.herokuapp.com/jurusan/' + params.jurusanId)
+        axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/' + params.jurusanId)
         setFormInput({
             ...res.data,
             idJurusan: res.data.jurusanId
@@ -38,9 +38,9 @@ export default function JurusanForm() {
         }
         
         if (isEditing) {
-            await axios.put('https://sistem-mahasiswa-new.herokuapp.com/jurusan/up/' + params.jurusanId, payload)
+            await axios.put('https://sistem-mahasiswa-be.herokuapp.com/jurusan/up/' + params.jurusanId, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-new.herokuapp.com/jurusan/savejurusan', payload)
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/jurusan/savejurusan', payload)
         }
         navigate('/jurusan')
     }
