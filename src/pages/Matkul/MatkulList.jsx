@@ -28,7 +28,7 @@ export default function MatkulList() {
             const res = await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/matkul/' + idMatkul)
             getDataList(res.data)
         } catch (err) {
-            alert('Terjadi Kesalahan')
+            alert('Terjadi Kesalahan, Mata Kuliah Sedang Digunakan')
         } finally {
             setIsLoading(false)
         }

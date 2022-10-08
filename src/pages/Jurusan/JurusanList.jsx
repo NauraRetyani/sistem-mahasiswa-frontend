@@ -26,7 +26,7 @@ export default function JurusanList() {
             const res = await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/jurusan/' + idJurusan)
             getDataList(res.data)
         } catch (err) {
-            alert('Terjadi Kesalahan')
+            alert('Terjadi Kesalahan, Jurusan Sedang Digunakan')
         } finally {
             setIsLoading(false)
         }
