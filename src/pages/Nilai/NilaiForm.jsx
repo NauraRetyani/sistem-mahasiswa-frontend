@@ -8,6 +8,9 @@ export default function NilaiForm() {
     const navigate = useNavigate()
     const params = useParams()
 
+    const [isLoading, setIsLoading] = useState(true);
+
+
     const isEditing = params.nilaiId
 
     const [students, setStudents] = useState([])
@@ -50,31 +53,46 @@ export default function NilaiForm() {
     }
 
     async function getFormInput() {
-        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/getnilai/' + params.nilaiId)
-        setFormInput({
-            ...res.data,
-            IdMhs: res.data.idMhs,
+       
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/getnilai/' + params.nilaiId)
+            setFormInput({
+                ...res.data,
+                IdMhs: res.data.idMhs,
 
-            ...res.data,
-            IdMatkul: res.data.idMatkul
+                ...res.data,
+                IdMatkul: res.data.idMatkul
 
-        })
+            })
     }
     async function submitData(evt) {
+       try{
+        setIsLoading(true)
         evt.preventDefault()
 
         const payload = {
             ...formInput,
-            idMhs: formInput.IdMhs
+            IdMhs: formInput.IdMhs
         }
 
         if (isEditing) {
             await axios.put('https://sistem-mahasiswa-be.herokuapp.com/nilai/update/' + params.nilaiId, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/nilai/savenilai', payload)
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/nilai/savenilai', {
+                idMhs: parseInt(formInput.IdMhs),
+                idJurusan: parseInt(formInput.IdJurusan),
+                idUjian: parseInt(formInput.IdUjian),
+                idMatkul: parseInt(formInput.IdMatkul),
+                nilai: parseInt(formInput.nilai),
+            }).then((re) => console.log(re))
         }
 
         navigate('/nilai')
+       
+    } catch (err) {
+        alert("Tidak Bisa di Submit, Mahasiswa Sudah Terdaftar di Jurusan dan Ujian yang Berbeda !")
+    }finally{
+        setIsLoading(false)
+    }
     }
 
     useEffect(() => {
@@ -87,7 +105,7 @@ export default function NilaiForm() {
             getFormInput()
         }
         getExams()
-        if (isEditing){
+        if (isEditing) {
             getFormInput()
         }
         getLessons()
@@ -136,7 +154,7 @@ export default function NilaiForm() {
                             onChange={evt => handleInput(evt, 'IdJurusan')} >
                             <option value="" disabled></option>
                             {majors.map(item =>
-                                <option value={item.IdJurusan}>
+                                <option value={item.idJurusan}>
                                     {item.namaJurusan}
                                 </option>
                             )}
@@ -152,7 +170,7 @@ export default function NilaiForm() {
                             onChange={evt => handleInput(evt, 'IdUjian')} >
                             <option value="" disabled></option>
                             {exams.map(item =>
-                                <option value={item.IdUjian}>
+                                <option value={item.idUjian}>
                                     {item.judulUjian}
                                 </option>
                             )}

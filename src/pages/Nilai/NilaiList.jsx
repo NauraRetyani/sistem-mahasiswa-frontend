@@ -34,8 +34,8 @@ export default function NilaiList() {
 
     return <>
         <div>
-            <div className="card shadow mb-4">
-                <div className="card-header py-3">
+        <div className="card shadow mb-4">
+                <div className="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                     <h6 className="m-0 font-weight-bold text-primary">Daftar Nilai</h6>
                     <Link to="/nilai/form">
                         <button className="btn btn-primary">

@@ -24,7 +24,7 @@ export default function UjianList() {
     }
 
     async function deleteData(id) {
-        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/ujian/delete' + id)
+        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/ujian/' + id)
         getDataList()
     }
     useEffect(() => {
@@ -53,7 +53,6 @@ export default function UjianList() {
                             <thead>
                                 <tr>
                                     <th scope="col">NO</th>
-                                    <th scope="col">Nama Matkul</th>
                                     <th scope="col">Ujian</th>
                                     <th scope="col">Status Ujian</th>
                                     <th scope="col">Action</th>
@@ -63,7 +62,6 @@ export default function UjianList() {
                                 {dataList.map((item, index) =>
                                     <tr>
                                         <th scope="row">{index + 1}</th>
-                                        <td>{item.matkul?.namaMatkul}</td>
                                         <td>{item.judulUjian}</td>
                                         <td>{item.statUjian}</td>
                                         <td>

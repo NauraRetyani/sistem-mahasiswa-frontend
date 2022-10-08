@@ -9,14 +9,10 @@ export default function UjianForm() {
 	const params = useParams()
 
 	const isEditing = params.ujianId
-
-	const [matkuls, setMatkuls] = useState([])
 	const [formInput, setFormInput] = useState({
 		
-		IdMatkul: '',
 		judulUjian: '',
 		statUjian: ''
-		
 
 	})
 
@@ -26,16 +22,11 @@ export default function UjianForm() {
 		setFormInput(copyFormInput)
 	}
 
-	async function getMatkuls () {
-		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/listmatkul')
-		setMatkuls(res.data)
-	}
-
 	async function getFormInput () {
-		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/getujian/' + params.ujianId)
+		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/getujian/' + params.idUjian)
 		setFormInput({
 			...res.data, 
-			IdMatkul : res.data.idMatkul
+			ujianId : res.data.ujianId
 		})
 	}
 
@@ -44,7 +35,7 @@ export default function UjianForm() {
 
 		const payload =  {
 			...formInput, 
-			idMatkul : formInput.IdMatkul
+			ujianId : formInput.ujianId
 		}
 
 		if (isEditing) {
@@ -57,7 +48,7 @@ export default function UjianForm() {
 	}
 
 	useEffect(() => {
-		getMatkuls()
+		
 		if (isEditing) {
 			getFormInput()
 		}
@@ -78,22 +69,6 @@ export default function UjianForm() {
 			
 			<div className="card-body">
 				<form className="w-50" onSubmit={submitData}>
-					
-				<div className="form-group mb-4">
-						<label>Mata Kuliah</label>
-						<select
-							className="form-control"
-							required
-							value={formInput.IdMatkul}
-							onChange={evt => handleInput(evt, 'IdMatkul')} >
-							<option value="" disabled></option>
-							{matkuls.map(item =>
-								<option value={item.idMatkul}>
-									{item.namaMatkul}
-								</option>
-							)}
-						</select>
-					</div>
 
 					<div className="form-group mb-4">
 						<label>Judul Ujian</label>
