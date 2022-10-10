@@ -10,8 +10,9 @@ export default function JurusanForm() {
 
     const isEditing = params.jurusanId
 
+    const [jurusan, setJurusan] = useState([])
     const [formInput, setFormInput] = useState({
-        namaJurusan: ''
+        namaJurusan : '',
     })
 
     function handleInput(evt, propName) {
@@ -20,13 +21,14 @@ export default function JurusanForm() {
         setFormInput(copyFormInput)
     }
 
+    async function getJurusan (){
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/listjurusan')
+        setJurusan(res.data)
+    }
 
     async function getFormInput() {
-        axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/' + params.jurusanId)
-        setFormInput({
-            ...res.data,
-            idJurusan: res.data.jurusanId
-        })
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/jurusan/byid/' + params.jurusanId)
+        setFormInput(res.data)
     }
 
     async function submitData(evt) {
@@ -40,13 +42,15 @@ export default function JurusanForm() {
         if (isEditing) {
             await axios.put('https://sistem-mahasiswa-be.herokuapp.com/jurusan/up/' + params.jurusanId, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/jurusan/savejurusan', payload)
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/jurusan/savejurusan', {
+                jurusanId: parseInt(formInput.jurusanId),
+            }).then((re) => console.log(re))
         }
         navigate('/jurusan')
     }
     
-
     useEffect(() => {
+        getJurusan()
         if (isEditing) {
             getFormInput()
         }

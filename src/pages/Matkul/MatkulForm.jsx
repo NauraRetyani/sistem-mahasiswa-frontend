@@ -10,8 +10,9 @@ export default function MatkulForm() {
 
     const isEditing = params.matkulId
     
+    const [matkul, setMatkul] = useState([])
     const [formInput, setFormInput] = useState({
-        namaMatkul: ''
+        namaMatkul : '',
     })
 
     function handleInput(evt, propName) {
@@ -19,13 +20,15 @@ export default function MatkulForm() {
         copyFormInput[propName] = evt.target.value
         setFormInput(copyFormInput)
     }
+    
+    async function getMatkul (){
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/listmatkul')
+        setMatkul(res.data)
+    }
 
     async function getFormInput() {
-        axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/' + params.idMatkul)
-        setFormInput({
-            ...res.data,
-            matkulId: res.data.matkulId
-        })
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/byid/' + params.matkulId)
+        setFormInput(res.data)
     }
 
     async function submitData(evt) {
@@ -39,12 +42,15 @@ export default function MatkulForm() {
         if (isEditing) {
             await axios.put('https://sistem-mahasiswa-be.herokuapp.com/matkul/up/' + params.matkulId, payload)
         } else {
-            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/matkul/savematkul', payload)
+            await axios.post('https://sistem-mahasiswa-be.herokuapp.com/matkul/savematkul', {
+                matkulId: parseInt(formInput.matkulId),
+            }).then((re) => console.log(re))
         }
         navigate('/matkul')
     }
 
     useEffect(() => {
+        getMatkul()
         if (isEditing) {
             getFormInput()
         }
