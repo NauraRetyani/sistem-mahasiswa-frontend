@@ -13,7 +13,7 @@ export default function NilaiList() {
     async function getDataList() {
         try {
             setIsLoading(true)
-            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/listnilai')
+            const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/listnilai/')
             setData(res.data)
             console.log(res.data)
         } catch (err) {

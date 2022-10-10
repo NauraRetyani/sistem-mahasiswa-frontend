@@ -48,7 +48,7 @@ export default function NilaiForm() {
     }
 
     async function getLessons() {
-        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/matkul/listmatkul')
+        const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/nilai/listnilai/')
         setLessons(res.data)
     }
 
@@ -60,8 +60,15 @@ export default function NilaiForm() {
                 IdMhs: res.data.idMhs,
 
                 ...res.data,
-                IdMatkul: res.data.idMatkul
+                IdMatkul: res.data.idMatkul,
 
+                ...res.data,
+                IdJurusan: res.data.idJurusan,
+
+                ...res.data,
+                IdUjian: res.data.idUjian
+                
+            
             })
     }
     async function submitData(evt) {
@@ -89,7 +96,7 @@ export default function NilaiForm() {
         navigate('/nilai')
        
     } catch (err) {
-        alert("Tidak Bisa di Submit, Mahasiswa Sudah Terdaftar di Jurusan dan Ujian yang Berbeda !")
+        alert("Mohon Maaf, Silahkan Masukan Nama Mahasiswa dan Jurusan Sesuai Data!")
     }finally{
         setIsLoading(false)
     }
@@ -127,87 +134,89 @@ export default function NilaiForm() {
             </div>
 
             <div className="card-body">
+                
                 <form className="w-50" onSubmit={submitData}>
 
-                    <div className="form-group mb-4">
-                        <label>Nama</label>
-                        <select
-                            className="form-control"
-                            required
-                            value={formInput.IdMhs}
-                            onChange={evt => handleInput(evt, 'IdMhs')} >
-                            <option value="" disabled></option>
-                            {students.map(item =>
-                                <option value={item.idMhs}>
-                                    {item.name}
-                                </option>
-                            )}
-                        </select>
-                    </div>
+                <div className="form-group mb-4">
+                    <label>Nama</label>
+                    <select
+                        className="form-control"
+                        required
+                        value={formInput.IdMhs}
+                        onChange={evt => handleInput(evt, 'IdMhs')} >
+                        <option value="" disabled></option>
+                        {students.map(item =>
+                            <option value={item.idMhs}>
+                                {item.name}
+                            </option>
+                        )}
+                    </select>
+                </div>
 
-                    <div className="form-group mb-4">
-                        <label>Jurusan</label>
-                        <select
-                            className="form-control"
-                            required
-                            value={formInput.IdJurusan}
-                            onChange={evt => handleInput(evt, 'IdJurusan')} >
-                            <option value="" disabled></option>
-                            {majors.map(item =>
-                                <option value={item.idJurusan}>
-                                    {item.namaJurusan}
-                                </option>
-                            )}
-                        </select>
-                    </div>
+                <div className="form-group mb-4">
+                    <label>Jurusan</label>
+                    <select
+                        className="form-control"
+                        required
+                        value={formInput.IdJurusan}
+                        onChange={evt => handleInput(evt, 'IdJurusan')} >
+                        <option value="" disabled></option>
+                        {majors.map(item =>
+                            <option value={item.idJurusan}>
+                                {item.namaJurusan}
+                            </option>
+                        )}
+                    </select>
+                </div>
 
-                    <div className="form-group mb-4">
-                        <label>Ujian</label>
-                        <select
-                            className="form-control"
-                            required
-                            value={formInput.IdUjian}
-                            onChange={evt => handleInput(evt, 'IdUjian')} >
-                            <option value="" disabled></option>
-                            {exams.map(item =>
-                                <option value={item.idUjian}>
-                                    {item.judulUjian}
-                                </option>
-                            )}
-                        </select>
-                    </div>
+                <div className="form-group mb-4">
+                    <label>Ujian</label>
+                    <select
+                        className="form-control"
+                        required
+                        value={formInput.IdUjian}
+                        onChange={evt => handleInput(evt, 'IdUjian')} >
+                        <option value="" disabled></option>
+                        {exams.map(item =>
+                            <option value={item.idUjian}>
+                                {item.judulUjian}
+                            </option>
+                        )}
+                    </select>
+                </div>
 
-                    <div className="form-group mb-4">
-                        <label>Mata Kuliah</label>
-                        <select
-                            className="form-control"
-                            required
-                            value={formInput.IdMatkul}
-                            onChange={evt => handleInput(evt, 'IdMatkul')} >
-                            <option value="" disabled></option>
-                            {lessons.map(item =>
-                                <option value={item.idMatkul}>
-                                    {item.namaMatkul}
-                                </option>
-                            )}
-                        </select>
-                    </div>
+                <div className="form-group mb-4">
+                    <label>Mata Kuliah</label>
+                    <select
+                        className="form-control"
+                        required
+                        value={formInput.IdMatkul}
+                        onChange={evt => handleInput(evt, 'IdMatkul')} >
+                        <option value="" disabled></option>
+                        {lessons.map(item =>
+                            <option value={item.idMatkul}>
+                                {item.namaMatkul}
+                            </option>
+                        )}
+                    </select>
+                </div>
 
-                    <div className="form-group mb-4">
-                        <label>Nilai</label>
-                        <input
-                            type="text"
-                            className="form-control"
-                            required
-                            value={formInput.nilai}
-                            onChange={evt => handleInput(evt, 'nilai')} />
-                    </div>
+                <div className="form-group mb-4">
+                    <label>Nilai</label>
+                    <input
+                        type="text"
+                        className="form-control"
+                        required
+                        value={formInput.nilai}
+                        onChange={evt => handleInput(evt, 'nilai')} />
+                </div>
 
 
-                    <button className="btn btn-primary">
-                        Submit
-                    </button>
-                </form>
+                <button className="btn btn-primary">
+                    Submit
+                </button>
+            </form>
+               
             </div>
 
         </div >

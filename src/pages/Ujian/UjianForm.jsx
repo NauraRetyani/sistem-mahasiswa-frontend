@@ -9,6 +9,8 @@ export default function UjianForm() {
 	const params = useParams()
 
 	const isEditing = params.ujianId
+
+	const [ujian, setUjian] = useState([])
 	const [formInput, setFormInput] = useState({
 		
 		judulUjian: '',
@@ -22,8 +24,14 @@ export default function UjianForm() {
 		setFormInput(copyFormInput)
 	}
 
+	async function getUjian (){
+		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/listujian')
+		setUjian(res.data)
+
+	}
+
 	async function getFormInput () {
-		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/getujian/' + params.idUjian)
+		const res = await axios.get('https://sistem-mahasiswa-be.herokuapp.com/ujian/getujian/' + params.ujianId)
 		setFormInput({
 			...res.data, 
 			ujianId : res.data.ujianId
@@ -41,14 +49,15 @@ export default function UjianForm() {
 		if (isEditing) {
 			await axios.put('https://sistem-mahasiswa-be.herokuapp.com/ujian/update/' + params.ujianId,payload)
 		} else {
-			await axios.post('https://sistem-mahasiswa-be.herokuapp.com/ujian/saveujian', payload)
+			await axios.post('https://sistem-mahasiswa-be.herokuapp.com/ujian/saveujian' , payload)
+			
 		}
 
 		navigate('/ujian')
 	}
 
 	useEffect(() => {
-		
+		getUjian()
 		if (isEditing) {
 			getFormInput()
 		}

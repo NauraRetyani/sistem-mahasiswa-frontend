@@ -24,7 +24,7 @@ export default function UjianList() {
     }
 
     async function deleteData(id) {
-        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/ujian/' + id)
+        await axios.delete('https://sistem-mahasiswa-be.herokuapp.com/ujian/delete/' + id)
         getDataList()
     }
     useEffect(() => {
