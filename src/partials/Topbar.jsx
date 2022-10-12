@@ -4,8 +4,8 @@ export default function Topbar() {
     const navigate = useNavigate()
 
     function removeUserData() {
-        localStorage.removeItem('userData')
-        // localStorage.clear();
+        // localStorage.removeItem('userData')
+        localStorage.clear();
         navigate('/login')
     }
 
